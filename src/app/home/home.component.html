@@ -1,0 +1,93 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4" style="padding:5px;">
+      <div style="background-color:aliceblue;height:520px">
+        <div class="table container">
+          <div>
+            <div class="row font-weight-bold">
+              <div class="col-md-4">PRODUCTS</div>
+              <div class="col-md-2">PRICE</div>
+              <div class="col-md-3">Quantity</div>
+              <div class="col-md-3">Total</div>
+            </div>
+          </div>
+          <hr />
+          <div>
+            <div *ngFor="let item of employeeservice.BillItems">
+              <div class="row">
+                <div class="col-md-4"><button style="background-color:red;border-radius:100%" (click)="RemoveItem(item)">X</button> &nbsp;&nbsp; {{item.title}}</div>
+                <div class="col-md-2">{{item.unitPrice}}</div>
+                <div class="col-md-3"><button (click)="DecreaseQuantity(item)">-</button>{{item.quantity}}<button (click)="IncreaseQuantity(item)">+</button></div>
+                <div class="col-md-3">{{item.unitPrice * item.quantity}}</div>
+              </div>
+              <hr />
+            </div>
+          </div>
+          <div class="fixed-bottom" style="position:absolute">
+            <div class="table container">
+              <div>
+                <div class="row font-weight-bold">
+                  <div class="col-md-4">SubTotal</div>
+                  <div class="col-md-4" style="background-color:white">{{SubTotal}}</div>
+                  <div class="col-md-3 text-right" style="background-color:white">{{ItemCount}} items</div>
+                </div>
+                <div class="row font-weight-bold">
+                  <div class="col-md-4">Discount</div>
+                  <input class="col-md-4" type="number" max="100" [formControl]="Discount" />
+                  <div class="col-md-3 text-right" style="background-color:white">{{Discount.value*SubTotal/100}} EUR</div>
+                </div>
+                <div class="row font-weight-bold">
+                  <div class="col-md-4">VAT</div>
+                  <input class="col-md-4" type="number" max="100" [formControl]="VAT" />
+                  <div class="col-md-3 text-right" style="background-color:white">{{VAT.value*SubTotal/100}} EUR</div>
+                </div>
+                <div class="row font-weight-bold">
+                  <div class="col-md-4">Total</div>
+                  <div class="col-md-7" style="background-color:white">{{SubTotal-(Discount.value*SubTotal/100)+(VAT.value*SubTotal/100)}} EUR</div>
+                </div>
+                <div class="row font-weight-bold">
+                  
+                  <button class="col-md-5 btn btn-danger" style="margin:10px;"
+                          onclick="if (confirm('Are you sure you want to clear the sale..!!\n You would not be able to recover the data later.')) { window.angularComponentReference.zone.run(() =>
+                    { window.angularComponentReference.CancelSaleFunction() })  }">Cancel Sale
+                  </button>
+                  <button class="col-md-5 btn btn-success" style="margin:10px;"
+                          onclick="if (confirm('Are you sure you want to confirm the sale')) { window.angularComponentReference.zone.run(() =>
+{ window.angularComponentReference.ConfirmSaleFunction({}) })  }">ProcessSale</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8" style="padding:5px;">
+
+      <div class="container" style="background-color:aliceblue;height:520px">
+        <div class="row bg-secondary" style="padding:5px;border-radius:2%">
+          <div class="col-md-2 text-white" [ngClass]="{'bg-dark': employeeservice.CategorySelected == 0, 'bg-secondary': !employeeservice.CategorySelected == 0}"
+               (click)="ChangeCategory()">
+            ALL
+          </div>
+          <div class="col-md-2 text-white" *ngFor="let category of employeeservice.Categories"
+               (click)="ChangeCategory(category)"
+               [ngClass]="{'bg-dark': IsSelected(category), 'bg-secondary': !IsSelected(category)}">
+            {{category.title}}
+          </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+          <textarea class="form-control" style="resize:none" [formControl]="SearchText" (keyup)="onKey($event)" rows="1"
+                    placeholder="Search Products"></textarea>
+        </div>
+        <div>
+          <div class="product text-center" *ngFor="let product of employeeservice.Products" (click)="SelectProduct(product)">
+            <b><span class="text-center title">{{product.title}}</span></b><br />
+            <span class="price">EUR {{product.unitPrice}}</span><br />
+            <span class="qty">{{product.availableQuantity}} available in stock</span><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

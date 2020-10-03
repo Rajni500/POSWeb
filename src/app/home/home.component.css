@@ -1,0 +1,35 @@
+.product {
+  height: 100px;
+  width: 100px;
+  background-color: rgba(0,0,0,0.1);
+  margin: 20px;
+  float: left;
+  border-radius: 6%;
+  align-content: center;
+  overflow: hidden;
+}
+.title {
+  font-size: 15px;
+  align-content: center;
+  overflow:hidden;
+}
+.price {
+  font-size: 15px;
+  align-content: center;
+}
+.qty {
+  font-size: 10px;
+  align-content: center;
+}
+.categorySelected {
+  margin-left: 10px;
+  margin-right: 10px;
+  align-content: center;
+  background-color : palevioletred;
+}
+.categoryNotSelected {
+  margin-left: 10px;
+  margin-right: 10px;
+  align-content: center;
+  background-color:greenyellow;
+}
