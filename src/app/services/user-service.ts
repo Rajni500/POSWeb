@@ -13,7 +13,7 @@ export class EmplyeeserviceService {
   Categories = [];
   CategorySelected = 0;
   BillItems = [];
-  url = 'http://localhost:55088/'
+  url = 'http://localhost:1100/'
   constructor(private http: HttpClient) { }
 
 
@@ -36,6 +36,24 @@ export class EmplyeeserviceService {
   AddInvoice(jsonData: any): Observable<any> {
     return this.sendAjaxCall(this.url + 'Invoice/Add', jsonData);
   }
+  AddProduct(jsonData: any): Observable<any> {
+    return this.sendAjaxCall(this.url + 'Product/Add', jsonData);
+  }
+  AddCategory(jsonData: any): Observable<any> {
+    return this.sendAjaxCall(this.url + 'Category/Add', jsonData);
+  }
+  EditCategory(jsonData: any): Observable<any> {
+    return this.sendAjaxCall(this.url + 'Category/edit', jsonData);
+  }
+  EditProduct(jsonData: any): Observable<any> {
+    return this.sendAjaxCall(this.url + 'Product/edit', jsonData);
+  }
+  DeleteProduct(jsonData: any): Observable<any> {
+    return this.sendAjaxCall(this.url + 'Product/delete', jsonData);
+  }
+  DeleteCategory(jsonData: any): Observable<any> {
+    return this.sendAjaxCall(this.url + 'Category/Delete', jsonData);
+  }
 
   sendAjaxCall(requestUrl: string, jsonData: Object): Observable<any> {
 
@@ -47,43 +65,4 @@ export class EmplyeeserviceService {
     };
     return this.http.post<User>(requestUrl, jsonData, httpOptions);
   }
-
-
-
-  //sendAjaxCall(requestUrl: string, jsonData: Object, successHandler?: Function, errorHandler?: Function, completeHandler?: Function, requestType?: string, successMesage?: string, contentType?: string) {
-
-  //  jsonData = jsonData === null ? {} : jsonData;
-  //  requestType = !requestType || requestType == 'POST' ? 'post' : 'get';
-  //  // var reqHeader = new Headers();
-  //  // reqHeader.append('Authorization', `Bearer ${JSON.parse(localStorage.getItem('currentUser'))['token']}`);
-  //  // reqHeader.append('Content-Type', 'application/json');
-  //  var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-  //  var httpOptions = {
-  //    headers: <HttpHeaders>new HttpHeaders({
-  //      'Authorization': `Bearer ${currentUser && currentUser.Token ? currentUser['Token'] : ''}`
-  //    })
-  //  };
-
-  //  this.http[requestType](this.url + requestUrl, jsonData, httpOptions).subscribe(
-  //    (data: any) => {
-  //      if (typeof successHandler === "function") {
-  //        successHandler(data);
-  //      }
-  //    },
-  //    (error: any) => {
-  //      if (error.status === 401) {
-  //        // auto logout if 401 response returned from api
-  //        localStorage.removeItem('currentUser');
-  //        location.reload(true);
-  //        return;
-  //      }
-
-  //      if (typeof errorHandler === "function") {
-  //        errorHandler(error);
-  //      } else {
-  //        console.log(error);
-  //      }
-  //    });
-  //}
 }

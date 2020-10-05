@@ -4,7 +4,15 @@
      [ngClass]="{'hidden': isLoggedIn, 'visible': !isLoggedIn}"><div class="btn btn-primary">Register</div></a>
   <a href="/login" style="float:left;margin:10px;"
      [ngClass]="{'hidden': isLoggedIn, 'visible': !isLoggedIn}"><div class="btn btn-primary">Login</div></a>
-  <a href="/" style="float:right;margin:10px;"
-     [ngClass]="{'hidden': !isLoggedIn, 'visible': isLoggedIn}"><div class="btn btn-primary" (click)="LogOut()">LogOut</div></a>
+  <div style="float:right;margin:10px;"
+       [ngClass]="{'hidden': !isLoggedIn, 'visible': isLoggedIn}"><div class="btn btn-primary" (click)="LogOut()">LogOut</div></div>
+  <div style="float:right;margin:10px;"
+       [ngClass]="{'hidden': !isAdmin, 'visible': isAdmin}">
+    <div class="btn btn-primary" (click)="ToggleAdminPage()">
+      {{
+      AdminPageText
+      }}
+    </div>
+  </div>
 </div>
 <router-outlet></router-outlet>

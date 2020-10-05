@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('currentUser', data.profileDetails);
           localStorage.setItem('currentUserToken', data.tokenString);
           localStorage.setItem('IsLoggedIn', 'true');
+          localStorage.setItem('currentUserRole', data.profileDetails.roleId);
         }
 
         this.Email.setValue("");

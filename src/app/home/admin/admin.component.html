@@ -1,0 +1,128 @@
+<div>
+  <button class="btn btn-primary" (click)="ShowCategories()">Categories</button>
+  <button class="btn btn-primary" (click)="ShowProducts()">Products</button>
+  <div class="container-fluid">
+
+    <div class="row" *ngIf="!GetShowProductValue()">
+      <div class="col-lg-5">
+        <div style="margin-bottom:15px;background-color:aliceblue;height:480px">
+          <form [formGroup]="categoryForm" (ngSubmit)="AddCategory()">
+
+            <h4 *ngIf="c.id.value == 0">Add New Category</h4>
+            <h4 *ngIf="c.id.value != 0">Update Category Details</h4>
+            <br />
+            <div class="form-group">
+              <label for="Title">Category Name</label>
+              <input formControlName="Title" class="form-control" />
+
+              <div *ngIf="c.Title.touched && c.Title.invalid" class="alert alert-danger">
+                <div *ngIf="c.Title.errors.required">Name is required.</div>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-primary" *ngIf="c.id.value == 0" type="submit" [disabled]="!categoryForm.valid">Submit</button>
+              <div class="btn btn-secondary" style="margin:5px;" *ngIf="c.id.value != 0" (click)="updateCategory()">Update</div>
+              <div class="btn btn-danger" style="margin:5px;" *ngIf="c.id.value != 0" (click)="ClearCategoryForm()">Cancel</div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div style="margin-bottom:15px;background-color:aliceblue;height:480px;overflow-y:scroll">
+          <h4 class="text-center">Categories</h4>
+          <br />
+          <div class="table container">
+            <div>
+              <div class="row font-weight-bold">
+                <div class="col-md-6">Title</div>
+                <div class="col-md-6">Action</div>
+              </div>
+            </div>
+            <hr />
+            <div>
+              <div *ngFor="let item of CategoryList">
+                <div class="row">
+                  <div class="col-md-6">{{item.title}}</div>
+                  <div class="col-md-6"><button class="btn btn-secondary" (click)="editCategory(item)">Edit</button> <button class="btn btn-danger" (click)="deleteCategory(item)">Delete</button></div>
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="GetShowProductValue()">
+      <div class="col-lg-5">
+        <div style="margin-bottom:15px;background-color:aliceblue;height:480px">
+          <form [formGroup]="productForm" (ngSubmit)="AddProduct()">
+
+            <h4 *ngIf="f.id.value == 0">Add New Product</h4>
+            <h4 *ngIf="f.id.value != 0">Update Product Details</h4>
+            <br />
+            <div class="form-group">
+              <label for="Title">Product Name</label>
+              <input formControlName="Title" class="form-control" />
+              <label for="UnitPrice">Unit Price</label>
+              <input type="number" pattern="[0-9]{1,}" formControlName="UnitPrice" class="form-control" />
+              <label for="AvailableQuantity">Available Quantity</label>
+              <input type="number" pattern="[0-9]{1,}" formControlName="AvailableQuantity" class="form-control" />
+              <label for="categoryId">Select Category:</label>
+              <select formControlName="categoryId" class="form-control" (change)="changeWebsite($event)">
+                <option disabled selected value>-- Select Category --</option>
+                <option *ngFor="let category of CategoryList" [value]="category.id">{{category.title}}</option>
+              </select>
+              <div *ngIf="f.categoryId.touched && f.categoryId.invalid" class="alert alert-danger">
+                <div *ngIf="f.categoryId.errors.required">Category is required.</div>
+              </div>
+              <div *ngIf="f.AvailableQuantity.invalid" class="alert alert-danger">
+                <div>Invalid Quantity.</div>
+              </div>
+              <div *ngIf="f.UnitPrice.invalid" class="alert alert-danger">
+                <div>Invalid Unit Price.</div>
+              </div>
+              <div *ngIf="f.Title.touched && f.Title.invalid" class="alert alert-danger">
+                <div *ngIf="f.Title.errors.required">Name is required.</div>
+              </div>
+            </div>
+
+            <div>
+              <button class="btn btn-primary" *ngIf="f.id.value == 0" type="submit" [disabled]="!productForm.valid">Submit</button>
+              <div class="btn btn-secondary" style="margin:5px;" *ngIf="f.id.value != 0" (click)="updateProduct()">Update</div>
+              <div class="btn btn-danger" style="margin:5px;" *ngIf="f.id.value != 0" (click)="ClearProductForm()">Cancel</div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div style="margin-bottom:15px;background-color:aliceblue;height:480px;overflow-y:scroll">
+          <h4 class="text-center">Products</h4>
+          <br />
+          <div class="table container">
+            <div>
+              <div class="row font-weight-bold">
+                <div class="col-md-4">Title</div>
+                <div class="col-md-2">PRICE</div>
+                <div class="col-md-3">Available Quantity</div>
+                <div class="col-md-3">Action</div>
+              </div>
+            </div>
+            <hr />
+            <div>
+              <div *ngFor="let item of ProductList">
+                <div class="row">
+                  <div class="col-md-4">{{item.title}}</div>
+                  <div class="col-md-2">{{item.unitPrice}}</div>
+                  <div class="col-md-3">{{item.availableQuantity}}</div>
+                  <div class="col-md-3"><button class="btn btn-secondary" (click)="editProduct(item)">Edit</button> <button class="btn btn-danger" (click)="deleteProduct(item)">Delete</button></div>
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
